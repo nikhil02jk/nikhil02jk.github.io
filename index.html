@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nikhil Karkera — Data Engineer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ground:      #0E0C1B;
+            --ground-alt:  #130F25;
+            --surface:     #1A1630;
+            --surface-hov: #221D3E;
+            --border:      #2A2050;
+            --faint:       #3D3660;
+            --muted:       #8279A8;
+            --text:        #EDE9FF;
+            --accent:      #E8A020;
+            --accent-dim:  rgba(232, 160, 32, 0.10);
+            --accent-2:    #7B6EF6;
+            --accent-2d:   rgba(123, 110, 246, 0.10);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--ground);
+            color: var(--text);
+            font-family: 'Inter', system-ui, sans-serif;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* ── NAV ── */
+        .nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2.5rem;
+            background: rgba(14, 12, 27, 0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-mark {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--accent);
+            letter-spacing: -0.02em;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: var(--muted);
+            text-decoration: none;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--text); }
+
+        .nav-cta {
+            font-family: 'JetBrains Mono', monospace !important;
+            font-size: 0.72rem !important;
+            color: var(--accent) !important;
+            border: 1px solid rgba(232,160,32,0.5);
+            padding: 0.3rem 0.8rem;
+            border-radius: 2px;
+            letter-spacing: 0.04em !important;
+            text-transform: none !important;
+            transition: background 0.2s, color 0.2s !important;
+        }
+
+        .nav-cta:hover {
+            background: var(--accent-dim);
+            color: var(--accent) !important;
+        }
+
+        /* ── HERO ── */
+        #about {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 7rem 2.5rem 5rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .hero-prefix {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.88rem;
+            color: var(--muted);
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeUp 0.55s 0.1s ease forwards;
+        }
+
+        .hero-prefix .kw  { color: var(--accent-2); }
+        .hero-prefix .vn  { color: var(--accent); }
+        .hero-prefix .pt  { color: var(--faint); }
+
+        .hero-name {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: clamp(3.75rem, 8.5vw, 7.5rem);
+            line-height: 0.92;
+            letter-spacing: -0.035em;
+            margin-bottom: 1.75rem;
+            opacity: 0;
+            transform: translateY(18px);
+            animation: fadeUp 0.65s 0.28s ease forwards;
+        }
+
+        .hero-name .ln2 { color: var(--accent); }
+
+        .hero-role {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--muted);
+            letter-spacing: 0.06em;
+            margin-bottom: 1.75rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem 1.75rem;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeUp 0.55s 0.46s ease forwards;
+        }
+
+        .hero-role span::before { content: '// '; color: var(--faint); }
+
+        .hero-summary {
+            max-width: 560px;
+            font-size: 1rem;
+            color: var(--muted);
+            line-height: 1.82;
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeUp 0.55s 0.58s ease forwards;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 0.9rem;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeUp 0.55s 0.68s ease forwards;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.65rem 1.5rem;
+            border-radius: 2px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: transform 0.18s, opacity 0.18s, background 0.18s;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--ground);
+        }
+
+        .btn-primary:hover { opacity: 0.88; transform: translateY(-2px); }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-ghost:hover { border-color: var(--muted); transform: translateY(-2px); }
+
+        .hero-contacts {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.25rem 2rem;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeUp 0.55s 0.78s ease forwards;
+        }
+
+        .hero-contacts a {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--muted);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: color 0.2s;
+        }
+
+        .hero-contacts a:hover { color: var(--accent); }
+
+        .hero-suffix {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.88rem;
+            color: var(--faint);
+            margin-top: 3.5rem;
+            opacity: 0;
+            animation: fadeUp 0.45s 0.88s ease forwards;
+        }
+
+        /* ── SECTION COMMON ── */
+        .section {
+            padding: 6rem 2.5rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-head { margin-bottom: 3rem; }
+
+        .eyebrow {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            color: var(--accent);
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            margin-bottom: 0.55rem;
+        }
+
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.05;
+        }
+
+        /* ── SKILLS ── */
+        #skills {
+            background: var(--ground-alt);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .skills-block {
+            display: flex;
+            flex-direction: column;
+            gap: 1.75rem;
+        }
+
+        .skill-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .sg-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent-2);
+            min-width: 168px;
+            padding-top: 0.3rem;
+            flex-shrink: 0;
+        }
+
+        .sg-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .chip {
+            padding: 0.22rem 0.7rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 2px;
+            font-size: 0.82rem;
+            color: var(--text);
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .chip:hover {
+            border-color: var(--accent-2);
+            background: var(--accent-2d);
+        }
+
+        /* ── EXPERIENCE ── */
+        .timeline {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 10px;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(to bottom, var(--accent) 0%, var(--faint) 75%, transparent 100%);
+        }
+
+        .tl-item {
+            padding-left: 2.25rem;
+            padding-bottom: 3.5rem;
+            position: relative;
+        }
+
+        .tl-item:last-child { padding-bottom: 0; }
+
+        .tl-dot {
+            position: absolute;
+            left: -4px;
+            top: 10px;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 2px solid var(--ground);
+            box-shadow: 0 0 0 3px var(--accent-dim);
+        }
+
+        .tl-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.3rem;
+        }
+
+        .tl-date {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--muted);
+            letter-spacing: 0.04em;
+        }
+
+        .tl-loc {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            color: var(--faint);
+        }
+
+        .tl-role {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin-bottom: 0.2rem;
+        }
+
+        .tl-company {
+            font-size: 0.875rem;
+            color: var(--accent-2);
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .tl-bullets {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .tl-bullets li {
+            font-size: 0.9rem;
+            color: var(--muted);
+            line-height: 1.68;
+            padding-left: 1.1rem;
+            position: relative;
+        }
+
+        .tl-bullets li::before {
+            content: '—';
+            position: absolute;
+            left: 0;
+            color: var(--faint);
+        }
+
+        .tl-bullets li strong {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        /* ── PROJECTS ── */
+        #projects {
+            background: var(--ground-alt);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .proj-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            transition: border-color 0.25s, transform 0.25s;
+        }
+
+        .proj-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .proj-period {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            color: var(--accent);
+            letter-spacing: 0.06em;
+            margin-bottom: 0.75rem;
+        }
+
+        .proj-name {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+        }
+
+        .proj-desc {
+            font-size: 0.875rem;
+            color: var(--muted);
+            line-height: 1.72;
+            flex: 1;
+            margin-bottom: 1.5rem;
+        }
+
+        .proj-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .tech-pill {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            padding: 0.2rem 0.6rem;
+            background: var(--accent-dim);
+            color: var(--accent);
+            border-radius: 2px;
+        }
+
+        /* ── EDUCATION ── */
+        .edu-grid { display: flex; flex-direction: column; gap: 1.25rem; }
+
+        .edu-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            padding: 1.75rem 2rem;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 1.5rem;
+            align-items: start;
+            transition: border-color 0.2s;
+        }
+
+        .edu-card:hover { border-color: var(--accent-2); }
+
+        .edu-degree {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin-bottom: 0.25rem;
+        }
+
+        .edu-school {
+            font-size: 0.875rem;
+            color: var(--accent-2);
+            font-weight: 500;
+            margin-bottom: 0.6rem;
+        }
+
+        .edu-courses {
+            font-size: 0.8rem;
+            color: var(--muted);
+            line-height: 1.65;
+        }
+
+        .edu-right { text-align: right; }
+
+        .edu-period {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            color: var(--muted);
+            margin-bottom: 0.6rem;
+            white-space: nowrap;
+        }
+
+        .edu-gpa {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--accent);
+            letter-spacing: -0.025em;
+            line-height: 1;
+        }
+
+        .edu-gpa-sub {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            color: var(--muted);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-top: 0.25rem;
+        }
+
+        /* ── CONTACT ── */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.25fr;
+            gap: 5rem;
+            align-items: start;
+        }
+
+        .contact-intro h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin-bottom: 0.75rem;
+        }
+
+        .contact-intro p {
+            font-size: 0.9rem;
+            color: var(--muted);
+            line-height: 1.78;
+            margin-bottom: 2.25rem;
+        }
+
+        .ci-link {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            color: var(--muted);
+            font-size: 0.875rem;
+            text-decoration: none;
+            margin-bottom: 1rem;
+            transition: color 0.2s;
+        }
+
+        .ci-link:hover { color: var(--text); }
+
+        .ci-icon {
+            width: 32px;
+            height: 32px;
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            display: grid;
+            place-items: center;
+            font-size: 0.78rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent);
+            flex-shrink: 0;
+            transition: border-color 0.2s;
+        }
+
+        .ci-link:hover .ci-icon { border-color: var(--accent); }
+
+        .form { display: flex; flex-direction: column; gap: 1.1rem; }
+
+        .field { display: flex; flex-direction: column; gap: 0.35rem; }
+
+        .field label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: var(--muted);
+        }
+
+        .field input,
+        .field textarea {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 2px;
+            padding: 0.75rem 1rem;
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            transition: border-color 0.2s;
+            resize: vertical;
+        }
+
+        .field input::placeholder,
+        .field textarea::placeholder { color: var(--faint); }
+
+        .field input:focus,
+        .field textarea:focus { outline: none; border-color: var(--accent); }
+
+        .field textarea { min-height: 115px; }
+
+        /* ── FOOTER ── */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 1.75rem 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            color: var(--faint);
+        }
+
+        /* ── ANIMATIONS ── */
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .reveal.in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .hero-prefix, .hero-name, .hero-role, .hero-summary,
+            .hero-actions, .hero-contacts, .hero-suffix {
+                opacity: 1; animation: none; transform: none;
+            }
+            .reveal { opacity: 1; transform: none; transition: none; }
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 720px) {
+            .nav-links { display: none; }
+            .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+            .edu-card { grid-template-columns: 1fr; }
+            .edu-right { text-align: left; }
+            .skill-group { flex-direction: column; }
+            .sg-label { min-width: auto; }
+            #about, .section { padding-left: 1.25rem; padding-right: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="nav">
+    <a href="#about" class="nav-mark">NK</a>
+    <ul class="nav-links">
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="resume.pdf" download class="nav-cta">resume.pdf ↓</a></li>
+    </ul>
+</nav>
+
+<!-- HERO -->
+<section id="about">
+    <p class="hero-prefix">
+        <span class="kw">const</span> <span class="vn">engineer</span> <span class="pt">= {</span>
+    </p>
+    <h1 class="hero-name">
+        NIKHIL<br><span class="ln2">KARKERA</span>
+    </h1>
+    <p class="hero-role">
+        <span>Data Engineer</span>
+        <span>AI / ML</span>
+        <span>Cloud Infrastructure</span>
+    </p>
+    <p class="hero-summary">
+        2+ years building large-scale data platforms on AWS and GCP that process terabytes daily. Specialized in distributed processing, real-time streaming, and ETL/ELT architecture. Currently completing a Master of Science in Data Science at the University of Colorado Boulder.
+    </p>
+    <div class="hero-actions">
+        <a href="#experience" class="btn btn-primary">View Experience</a>
+        <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+        <a href="resume.pdf" download class="btn btn-ghost">Download Resume</a>
+    </div>
+    <div class="hero-contacts">
+        <a href="mailto:nikhil.jk02@gmail.com">✉ nikhil.jk02@gmail.com</a>
+        <a href="tel:+13034193489">☎ 303 419 3489</a>
+        <a href="https://linkedin.com/in/nikhiljk02" target="_blank" rel="noopener">in linkedin</a>
+        <a href="https://github.com/nikhil02jk" target="_blank" rel="noopener">⌥ github</a>
+    </div>
+    <p class="hero-suffix">}</p>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+    <div class="section">
+        <div class="section-head reveal">
+            <p class="eyebrow">expertise</p>
+            <h2 class="section-title">Technical Skills</h2>
+        </div>
+        <div class="skills-block">
+            <div class="skill-group reveal">
+                <span class="sg-label">Programming</span>
+                <div class="sg-chips">
+                    <span class="chip">Python</span>
+                    <span class="chip">Scala</span>
+                    <span class="chip">SQL</span>
+                    <span class="chip">Java</span>
+                    <span class="chip">R</span>
+                    <span class="chip">Pandas</span>
+                    <span class="chip">PyTorch</span>
+                    <span class="chip">NumPy</span>
+                    <span class="chip">SciPy</span>
+                </div>
+            </div>
+            <div class="skill-group reveal">
+                <span class="sg-label">Data Engineering</span>
+                <div class="sg-chips">
+                    <span class="chip">Apache Spark</span>
+                    <span class="chip">Kafka</span>
+                    <span class="chip">Apache Airflow</span>
+                    <span class="chip">dbt</span>
+                    <span class="chip">Snowflake</span>
+                    <span class="chip">Databricks</span>
+                    <span class="chip">Delta Lake</span>
+                    <span class="chip">Apache Iceberg</span>
+                    <span class="chip">Hadoop</span>
+                </div>
+            </div>
+            <div class="skill-group reveal">
+                <span class="sg-label">Cloud Infrastructure</span>
+                <div class="sg-chips">
+                    <span class="chip">AWS S3</span>
+                    <span class="chip">Lambda</span>
+                    <span class="chip">EC2</span>
+                    <span class="chip">Redshift</span>
+                    <span class="chip">AWS Glue</span>
+                    <span class="chip">GCP BigQuery</span>
+                    <span class="chip">Dataproc</span>
+                    <span class="chip">Vertex AI</span>
+                    <span class="chip">Terraform</span>
+                    <span class="chip">Kubernetes</span>
+                    <span class="chip">CI/CD</span>
+                </div>
+            </div>
+            <div class="skill-group reveal">
+                <span class="sg-label">Databases</span>
+                <div class="sg-chips">
+                    <span class="chip">PostgreSQL</span>
+                    <span class="chip">DynamoDB</span>
+                    <span class="chip">Cassandra</span>
+                    <span class="chip">MongoDB</span>
+                    <span class="chip">MySQL</span>
+                    <span class="chip">Oracle</span>
+                </div>
+            </div>
+            <div class="skill-group reveal">
+                <span class="sg-label">Tools &amp; Frameworks</span>
+                <div class="sg-chips">
+                    <span class="chip">Tableau</span>
+                    <span class="chip">Splunk</span>
+                    <span class="chip">LangChain</span>
+                    <span class="chip">FastAPI</span>
+                    <span class="chip">TensorFlow</span>
+                    <span class="chip">Git</span>
+                    <span class="chip">Parquet</span>
+                    <span class="chip">Avro</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+    <div class="section">
+        <div class="section-head reveal">
+            <p class="eyebrow">career</p>
+            <h2 class="section-title">Work Experience</h2>
+        </div>
+        <div class="timeline">
+
+            <div class="tl-item reveal">
+                <div class="tl-dot"></div>
+                <div class="tl-meta">
+                    <span class="tl-date">Aug 2025 – Dec 2025</span>
+                    <span class="tl-loc">Boulder, CO</span>
+                </div>
+                <h3 class="tl-role">AI/ML Engineer Intern</h3>
+                <p class="tl-company">Honda Research Institute – 99P Labs</p>
+                <ul class="tl-bullets">
+                    <li>Designed an AI-powered decision intelligence prototype using <strong>LLMs, prompt engineering, vector embeddings, and RAG</strong> to support mobility, supplier, and manufacturing decision workflows through structured data integration.</li>
+                    <li>Developed a <strong>battery health monitoring and anomaly detection</strong> system using LSTM (TensorFlow) and XGBoost to estimate State of Charge and State of Health, with a failure detection module identifying anomalies and potential degradation.</li>
+                </ul>
+            </div>
+
+            <div class="tl-item reveal">
+                <div class="tl-dot"></div>
+                <div class="tl-meta">
+                    <span class="tl-date">Jun 2025 – Aug 2025</span>
+                    <span class="tl-loc">Littleton, CO</span>
+                </div>
+                <h3 class="tl-role">Data Engineer Intern</h3>
+                <p class="tl-company">EchoStar Corporation – Boost Mobile</p>
+                <ul class="tl-bullets">
+                    <li>Engineered <strong>ELT workflows in Snowflake</strong> using optimized SQL (joins, subqueries, clustering) to validate, cleanse, and transform raw telecom cost and network performance data, reducing compute usage by <strong>25%</strong> through query pruning.</li>
+                    <li>Conducted root cause analysis on fiber and power outage anomalies across <strong>10K+ telecom sites</strong> using an LLM-powered assistant (LangChain, FastAPI), reducing excess roaming costs through prioritized site recovery recommendations.</li>
+                </ul>
+            </div>
+
+            <div class="tl-item reveal">
+                <div class="tl-dot"></div>
+                <div class="tl-meta">
+                    <span class="tl-date">Jul 2022 – Jul 2024</span>
+                    <span class="tl-loc">Bengaluru, India</span>
+                </div>
+                <h3 class="tl-role">Data Engineer 1</h3>
+                <p class="tl-company">Zee Entertainment Enterprises Limited</p>
+                <ul class="tl-bullets">
+                    <li>Extracted and processed <strong>13TB of data</strong> from DynamoDB, leading a zero-downtime migration to Cassandra using AWS EMR and Spark SQL, improving processing efficiency by <strong>35%</strong>.</li>
+                    <li>Orchestrated a real-time ingestion pipeline using <strong>Kafka and Spark Structured Streaming</strong> on AWS EMR, processing 5K+ events/min into S3 with 99.9% data delivery reliability.</li>
+                    <li>Implemented an ETL pipeline using Spark and Airflow for the Global Business Team, integrating NoSQL and RDBMS data into a subscription mart processing <strong>10M+ records daily</strong>.</li>
+                    <li>Provisioned and automated scalable <strong>GCP infrastructure with Terraform</strong>, deploying compute, storage, networking, and IAM policies, reducing setup time by <strong>60%</strong>.</li>
+                    <li>Architected a <strong>Medallion (Bronze–Silver–Gold) data lake on GCP</strong>, enforcing schema governance for 10+ business teams handling 150GB+ of daily data.</li>
+                    <li>Constructed a serverless ETL pipeline using <strong>AWS Lambda and Python</strong> to ingest AppsFlyer attribution data into Redshift, enabling real-time campaign performance dashboards.</li>
+                </ul>
+            </div>
+
+            <div class="tl-item reveal">
+                <div class="tl-dot"></div>
+                <div class="tl-meta">
+                    <span class="tl-date">Jan 2022 – May 2022</span>
+                    <span class="tl-loc">Bengaluru, India</span>
+                </div>
+                <h3 class="tl-role">Data Engineer Intern</h3>
+                <p class="tl-company">Zee Entertainment Enterprises Limited</p>
+                <ul class="tl-bullets">
+                    <li>Analyzed subscription lifecycle metrics across <strong>10M+ records</strong>, building Tableau dashboards that enabled 5+ business teams to track conversions, renewals, and revenue performance.</li>
+                    <li>Secured PII data for ZEE5 users by building a Python pipeline with <strong>SHA-256 hashing</strong> for PostgreSQL storage, enforcing data access controls and limiting exposure across environments.</li>
+                    <li>Built a PySpark pipeline to monitor user activity, generating insights that cut <strong>digital churn by 15%</strong> and increased average user retention time.</li>
+                </ul>
+            </div>
+
+            <div class="tl-item reveal">
+                <div class="tl-dot"></div>
+                <div class="tl-meta">
+                    <span class="tl-date">Feb 2021 – Aug 2021</span>
+                    <span class="tl-loc">Bengaluru, India</span>
+                </div>
+                <h3 class="tl-role">Data Scientist Intern</h3>
+                <p class="tl-company">nSmiles</p>
+                <ul class="tl-bullets">
+                    <li>Developed an <strong>AI-powered chatbot</strong> using Rasa and TensorFlow, training NLU models on 100+ conversational samples across 12+ intents to classify user queries and guide career counseling.</li>
+                    <li>Designed NLU training pipelines with intent classification, entity extraction, regex features, and lookup tables to improve conversational understanding and dialogue flow.</li>
+                    <li>Published and presented <em>"AI-Based Career Counseling with Chatbots"</em> at the <strong>5th International Conference on Intelligent Sustainable Systems</strong> (Springer).</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+    <div class="section">
+        <div class="section-head reveal">
+            <p class="eyebrow">build</p>
+            <h2 class="section-title">Projects</h2>
+        </div>
+        <div class="projects-grid">
+
+            <div class="proj-card reveal">
+                <p class="proj-period">Jan 2026 – Feb 2026</p>
+                <h3 class="proj-name">Analytics Engineering Pipeline with dbt and Snowflake</h3>
+                <p class="proj-desc">Built a production-style ELT pipeline implementing dimensional modeling with staging models, fact tables, and data marts using modular SQL transformations. Automated workflows with Apache Airflow, incorporating dbt macros, data quality tests, and Snowflake RBAC to ensure reliable, secure, scalable pipelines.</p>
+                <div class="proj-tech">
+                    <span class="tech-pill">dbt</span>
+                    <span class="tech-pill">Snowflake</span>
+                    <span class="tech-pill">Apache Airflow</span>
+                    <span class="tech-pill">SQL</span>
+                    <span class="tech-pill">RBAC</span>
+                    <span class="tech-pill">Dimensional Modeling</span>
+                </div>
+            </div>
+
+            <div class="proj-card reveal">
+                <p class="proj-period">Apr 2025 – May 2025</p>
+                <h3 class="proj-name">Supply Chain Optimization and Demand Forecasting</h3>
+                <p class="proj-desc">Developed predictive models using time series analysis (ARIMA, LSTM) to optimize inventory management and reduce excess stock. Conducted EDA and advanced visualizations, improving price forecasting accuracy by 20%. Applied Regression, SVM, Ensemble methods, and clustering.</p>
+                <div class="proj-tech">
+                    <span class="tech-pill">Python</span>
+                    <span class="tech-pill">ARIMA</span>
+                    <span class="tech-pill">LSTM</span>
+                    <span class="tech-pill">TensorFlow</span>
+                    <span class="tech-pill">Scikit-learn</span>
+                    <span class="tech-pill">Time Series</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+    <div class="section">
+        <div class="section-head reveal">
+            <p class="eyebrow">academic</p>
+            <h2 class="section-title">Education</h2>
+        </div>
+        <div class="edu-grid">
+
+            <div class="edu-card reveal">
+                <div>
+                    <h3 class="edu-degree">Master of Science in Data Science</h3>
+                    <p class="edu-school">University of Colorado Boulder</p>
+                    <p class="edu-courses">Data Analytics · Statistics · Predictive Modeling · Computer Vision · Data Visualization</p>
+                </div>
+                <div class="edu-right">
+                    <p class="edu-period">Aug 2024 – Apr 2026</p>
+                    <p class="edu-gpa">3.93</p>
+                    <p class="edu-gpa-sub">GPA / 4.0</p>
+                </div>
+            </div>
+
+            <div class="edu-card reveal">
+                <div>
+                    <h3 class="edu-degree">Bachelor of Science in Computer Science</h3>
+                    <p class="edu-school">PES University</p>
+                    <p class="edu-courses">Information Systems · Big Data · Database Management · Software Engineering</p>
+                </div>
+                <div class="edu-right">
+                    <p class="edu-period">Aug 2018 – May 2022</p>
+                    <p class="edu-gpa">3.67</p>
+                    <p class="edu-gpa-sub">GPA / 4.0</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+    <div class="section">
+        <div class="section-head reveal">
+            <p class="eyebrow">connect</p>
+            <h2 class="section-title">Get in Touch</h2>
+        </div>
+        <div class="contact-grid">
+            <div class="contact-intro reveal">
+                <h3>Open to opportunities</h3>
+                <p>I'm actively looking for full-time data engineering and ML roles starting mid-2026. I'm also open to research collaborations and interesting infrastructure challenges. Reach out directly — I respond within 24 hours.</p>
+                <a href="mailto:nikhil.jk02@gmail.com" class="ci-link">
+                    <div class="ci-icon">✉</div>
+                    nikhil.jk02@gmail.com
+                </a>
+                <a href="tel:+13034193489" class="ci-link">
+                    <div class="ci-icon">☎</div>
+                    303 419 3489
+                </a>
+                <a href="https://linkedin.com/in/nikhiljk02" target="_blank" rel="noopener" class="ci-link">
+                    <div class="ci-icon">in</div>
+                    linkedin.com/in/nikhiljk02
+                </a>
+                <a href="https://github.com/nikhil02jk" target="_blank" rel="noopener" class="ci-link">
+                    <div class="ci-icon">gh</div>
+                    github.com/nikhil02jk
+                </a>
+            </div>
+            <form class="form reveal" onsubmit="sendEmail(event)">
+                <div class="field">
+                    <label for="fname">Name</label>
+                    <input type="text" id="fname" name="name" placeholder="Your name" required>
+                </div>
+                <div class="field">
+                    <label for="femail">Email</label>
+                    <input type="email" id="femail" name="email" placeholder="you@company.com" required>
+                </div>
+                <div class="field">
+                    <label for="fmessage">Message</label>
+                    <textarea id="fmessage" name="message" placeholder="What would you like to discuss?" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="align-self: flex-start;">Send Message</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <span>Nikhil Jaswaraj Karkera &mdash; Boulder, Colorado</span>
+    <span>Built with HTML &middot; CSS &middot; JS</span>
+</footer>
+
+<script>
+    // Scroll reveal
+    const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+            if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+        });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+    // Contact form — mailto
+    function sendEmail(e) {
+        e.preventDefault();
+        const name    = document.getElementById('fname').value.trim();
+        const email   = document.getElementById('femail').value.trim();
+        const message = document.getElementById('fmessage').value.trim();
+        const subject = encodeURIComponent('Portfolio Contact from ' + name);
+        const body    = encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\nMessage:\n' + message);
+        window.location.href = 'mailto:nikhil.jk02@gmail.com?subject=' + subject + '&body=' + body;
+    }
+
+    // Nav active highlight
+    const navAs = document.querySelectorAll('.nav-links a[href^="#"]');
+    const sects = Array.from(document.querySelectorAll('section[id]'));
+
+    window.addEventListener('scroll', () => {
+        const y = window.scrollY + 80;
+        let active = '';
+        sects.forEach((s) => { if (s.offsetTop <= y) active = s.id; });
+        navAs.forEach((a) => {
+            a.style.color = a.getAttribute('href') === '#' + active ? 'var(--text)' : '';
+        });
+    }, { passive: true });
+</script>
+
+</body>
+</html>
